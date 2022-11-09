@@ -1,0 +1,184 @@
+{% extends "_base.html" %} {% block content %}
+{% if messages %}
+
+  
+{% endif %}
+<div class="px-6 md:px-0">
+  <form method="POST" action="{% url 'addVote'%}">
+    {% csrf_token %}
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+      <div>
+        <label
+          for="lga"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >LGA</label
+        >
+        <select
+          required
+          name="lga"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 py-2 my-2 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option selected value="">select lga</option>
+          {% if local_govs%} {% for lga in local_govs %} {% if lga.lga_name %}
+          <option value="{{lga.lga_id}}">{{ lga.lga_name}}</option>
+          {%endif%} {% endfor %} {%else%}
+          <option value="">No local government</option>
+          {%endif%}
+        </select>
+      </div>
+      <div>
+        <label
+          for="ward"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >ward</label
+        >
+        <select
+          name="ward"
+          required
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 py-2 my-2 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option selected value="">select ward</option>
+          {% if wards%} {% for ward in wards %} {% if ward.ward_name %}
+          <option value="{{ward.ward_id}}">{{ward.ward_name}}</option>
+          {%endif%} {% endfor %} {%else%}
+          <option value="">No wards available</option>
+          {%endif%}
+        </select>
+      </div>
+
+      <div>
+        <label
+          for="polling_unit_number"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >polling unit number</label
+        >
+        <input
+          name="polling_unit_number"
+          type="number"
+          id="polling_unit_number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="123-45-678"
+          pattern="[0-9]"
+          required
+        />
+      </div>
+      <div>
+        <label
+          for="polling_unit_name"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >polling unit name</label
+        >
+        <input
+          name="polling_unit_name"
+          type="text"
+          id="polling_unit_name"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="polling unit name"
+          required
+        />
+      </div>
+      <div>
+        <label
+          for="pollingdesc "
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >polling unit description</label
+        >
+        <textarea
+          id="pollingdesc"
+          name="pollingdesc"
+          rows="4"
+          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="polling unit description"
+        ></textarea>
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="space-y-4">
+        {% if parties%} {% for party in parties %} {% if party.partyname %}
+
+        <label
+          for="{{party.partyname}}"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >{{party.partyname}} result</label
+        >
+        <input
+          name="{{party.partyname}}"
+          type="number"
+          min="0"
+          placeholder="{{party.partyname}} result"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 py-2 my-2 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+        {%endif%} {% endfor %} {%else%} {%endif%}
+      </div>
+      <label
+        for="enter_by"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >Enter by</label
+      >
+      <input
+        type="text"
+        id="enter_by"
+        name="enter_by"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="your full name"
+        required
+      />
+    </div>
+    <div class="mb-6">
+      <label
+        for="longitude"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >your longitude</label
+      >
+      <input
+        type="text"
+        name="longitude"
+        id="longitude"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="12.9785987"
+        required
+      />
+    </div>
+    <div class="mb-6">
+      <label
+        for="latitude"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >Latitude</label
+      >
+      <input
+        hidden
+        type="text"
+        name="latitude"
+        id="latitude"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="-62.72367836"
+        required=""
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (e) {
+    function setGeoLocation(location) {
+      document.getElementById("longitude").value = location.coords.longitude;
+      document.getElementById("latitude").value = location.coords.latitude;
+    }
+    const location = window.navigator.geolocation.getCurrentPosition(
+      setGeoLocation,
+      function (position) {
+        alert(
+          "please close this browser and open it again and allow your location"
+        );
+      }
+    );
+  });
+</script>
+{%endblock%}

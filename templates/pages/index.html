@@ -1,0 +1,57 @@
+{% extends "_base.html" %} {% block content %}
+<div class="h-screen">
+  <div class="flex justify-center items-center my-8">
+  <div class="py-12 px-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-1/2 flex flex-col gap-6" >
+    
+         <div>
+          <label for="">Get polling unit voting result</label>
+            <select
+            id="polling_unit"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 py-2 my-2 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected>Choose a polling unit</option>
+            {% if polling_units%} {% for pu in polling_units %} 
+            {% if pu.polling_unit_name %}
+            <option value="{% url 'polling_result'  pu.uniqueid %}">
+              {{ pu.polling_unit_name}}
+            </option>
+            {%endif%} 
+            {% endfor %}
+             {%else%}
+            <option value="">No polling unit</option>
+            {%endif%}
+          </select>
+         </div>
+         <div>
+          <label for="">Get LGA voting result</label>
+           <select
+            id="lga"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 py-2 my-2 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected value="">Get LGA result</option>
+            {% if local_govs%} {% for lga in local_govs %} {% if lga.lga_name %}
+            <option value="{% url 'polling_score'  lga.lga_id %}">
+              {{ lga.lga_name}}
+            </option>
+            {%endif%} {% endfor %} {%else%}
+            <option value="">No local government</option>
+            {%endif%}
+          </select>
+         </div>
+   
+</div>
+</div>
+</div>
+
+
+        
+       
+<script>
+  document.getElementById("polling_unit").addEventListener("change", (e) => {
+    if (e.target.value) window.location.href = e.target.value;
+  });
+  document.getElementById("lga").addEventListener("change", (e) => {
+    if (e.target.value) window.location.href = e.target.value;
+  });
+</script>
+{% endblock content %}
