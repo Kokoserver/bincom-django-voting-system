@@ -71,14 +71,13 @@ WSGI_APPLICATION = "bincom.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bincom",
-        "USER": "postgres",
-        "PASSWORD": '08089223577Ola*',
-        "HOST": "localhost",  # Or an IP Address that your DB is hosted on
-        "PORT": 5432,
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),  # Or an IP Address that your DB is hosted on
+        "PORT": os.getenv("DB_PORT"),
     }
 }
-
 
 
 # Password validation
