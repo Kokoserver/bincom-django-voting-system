@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Agentname(models.Model):
-    name_id = models.AutoField(primary_key=True)
+    name_id = models.IntegerField(primary_key=True)
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     email = models.CharField(max_length=255, blank=True, null=True)
@@ -16,7 +16,7 @@ class Agentname(models.Model):
 
 
 class AnnouncedLgaResults(models.Model):
-    result_id = models.AutoField(primary_key=True)
+    result_id = models.IntegerField(primary_key=True)
     lga_name = models.CharField(max_length=50)
     party_abbreviation = models.CharField(max_length=4)
     party_score = models.IntegerField()
@@ -33,7 +33,7 @@ class AnnouncedLgaResults(models.Model):
 
 
 class AnnouncedPuResults(models.Model):
-    result_id = models.AutoField(primary_key=True)
+    result_id = models.IntegerField(primary_key=True)
     polling_unit_uniqueid = models.CharField(max_length=50)
     party_abbreviation = models.CharField(max_length=4)
     party_score = models.IntegerField()
@@ -50,7 +50,7 @@ class AnnouncedPuResults(models.Model):
 
 
 class AnnouncedStateResults(models.Model):
-    result_id = models.AutoField(primary_key=True)
+    result_id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=50)
     party_abbreviation = models.CharField(max_length=4)
     party_score = models.IntegerField()
@@ -67,7 +67,7 @@ class AnnouncedStateResults(models.Model):
 
 
 class AnnouncedWardResults(models.Model):
-    result_id = models.AutoField(primary_key=True)
+    result_id = models.IntegerField(primary_key=True)
     ward_name = models.CharField(max_length=50)
     party_abbreviation = models.CharField(max_length=4)
     party_score = models.IntegerField()
@@ -81,7 +81,7 @@ class AnnouncedWardResults(models.Model):
 
 
 class Lga(models.Model):
-    uniqueid = models.AutoField(primary_key=True)
+    uniqueid = models.IntegerField(primary_key=True)
     lga_id = models.IntegerField()
     lga_name = models.CharField(max_length=50)
     state_id = models.IntegerField()
@@ -111,7 +111,7 @@ class Party(models.Model):
 
 
 class PollingUnit(models.Model):
-    uniqueid = models.AutoField(primary_key=True)
+    uniqueid = models.IntegerField(primary_key=True)
     polling_unit_id = models.IntegerField()
     ward_id = models.IntegerField()
     lga_id = models.IntegerField()
@@ -143,7 +143,7 @@ class States(models.Model):
 
 
 class Ward(models.Model):
-    uniqueid = models.AutoField(primary_key=True)
+    uniqueid = models.IntegerField(primary_key=True)
     ward_id = models.IntegerField()
     ward_name = models.CharField(max_length=50)
     lga_id = models.IntegerField()
